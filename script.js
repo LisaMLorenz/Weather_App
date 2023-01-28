@@ -2,8 +2,8 @@
 
 const buttonDiv = $("<div>").attr("id", "city-buttons-go"); // creating a div where I can put all the city buttons
 $('#history.list-group').append(buttonDiv); // appending the new ciyt button div to existing div in DOM
-var userInput = ('London');
-var userSearch = [];
+
+let userInput = 'London';
 let storedCities = [];
 
 $("#search-button").click(function(event){ // and the search button is clicked
@@ -11,7 +11,8 @@ $("#search-button").click(function(event){ // and the search button is clicked
 
     console.log("Search button clicked!"); // checks if button click event is working
 
-    let userInput = $('#search-input').val(); // When the user types in a city search
+    userInput = $('#search-input').val(); // When the user types in a city search
+   
     const cityButton = $("<button>").text(userInput).addClass("d-flex flex-column").css({"padding":'10px', "margin": '5px'}); // I want to create a button with that text content
     buttonDiv.append(cityButton); // button is appended to the button div
     $('#search-input').val(''); // and the text field is cleared
@@ -19,7 +20,6 @@ $("#search-button").click(function(event){ // and the search button is clicked
     localStorage.setItem("Cities", JSON.stringify(storedCities));
 
     console.log(userInput); // prints the recent text field input in the console
-    console.log(storedCities);
     
 });
 
@@ -28,8 +28,8 @@ console.log(storedCities);
 $(document).ready(function(){
     
     storedCities = JSON.parse(localStorage.getItem("Cities"));
-if(storedCities){
-  for (let i = 0; i < storedCities.length; i++) {
+    if(storedCities){
+    for (let i = 0; i < storedCities.length; i++) {
     let city = storedCities[i];
     const cityButton = $("<button>").text(city).addClass("d-flex flex-column").css({"padding":'10px', "margin": '5px'});
     buttonDiv.append(cityButton);
@@ -62,11 +62,6 @@ var APIKey = '7951fb6b203b6da5edb80b868d81e68b'; // setting API key to link to O
             console.log(response);
         });
 
-
-
-
-    
-  
 
     // I also want to use the input with Weather API to generate a forecast
 
