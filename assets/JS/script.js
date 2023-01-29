@@ -65,13 +65,13 @@ $("#search-button").click(function (event) { // and the search button is clicked
             let humidity = response.main.humidity;
             let windSpeed = response.wind.speed;
 
-
+            
             $("#today").append(cityName);
-            $("#today").append(currentDate);
-            $("#today").append(weatherEmoji);
-            $("#today").append(temperatureInCelcius + "˚");
-            $("#today").append("Humidity: " + humidity);
-            $("#today").append("Wind Speed: " + windSpeed);
+            $("#today").append("  " + currentDate);
+            $("#today").append("  " + weatherEmoji);
+            $("#today").append("  " + temperatureInCelcius + "˚");
+            $("#today").append("  Humidity: " + humidity);
+            $("#today").append("  Wind Speed: " + windSpeed);
 
         });
 
@@ -99,19 +99,6 @@ $(document).ready(function () { // Keep the button
     }
 });
 
-console.log(storedCities);
 
 // I also want to use the input with Weather API to generate a forecast
-
-var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + userInput + "&appid=7951fb6b203b6da5edb80b868d81e68b"; // creates a variable URL depending on what user types into textfield
-var APIKey = '7951fb6b203b6da5edb80b868d81e68b'; // setting API key to link to OpenWeatherMap
-
-$.ajax({
-    url: queryURL,
-    method: "GET"
-})
-    .then(function (response) {
-        console.log(response);
-    });
-
 // and the current preview is cleared and replaced with the new data pulled from Weather API
