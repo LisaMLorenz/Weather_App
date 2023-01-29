@@ -6,6 +6,22 @@ $('#history.list-group').append(buttonDiv); // appending the new ciyt button div
 let userInput = 'London';
 let storedCities = [];
 
+const codeToEmoji = {
+    "01d": "☀️",
+    "02d": "⛅️",
+    "03d": "☁️",
+    "04d": "☁️",
+    "09d": "🌧️",
+    "10d": "🌦️",
+    "11d": "⛈️",
+    "13d": "🌨️",
+    "50d": "🌫️",
+};
+
+function kelvinToCelsius(kelvin) { // converting from Kelving to Celcius 
+    return Math.round(kelvin - 273.15); // and rounding number to before decimal
+}
+
 $("#search-button").click(function (event) { // and the search button is clicked
     event.preventDefault(); // stops page from reloading
 
@@ -21,6 +37,43 @@ $("#search-button").click(function (event) { // and the search button is clicked
 
     console.log(userInput); // prints the recent text field input in the console
     console.log(storedCities);
+
+
+    // nested function to retrieve information for newly input city from API
+
+    queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + userInput + "&appid=7951fb6b203b6da5edb80b868d81e68b"; // creates a variable URL depending on what user types into textfield
+
+    $.ajax({
+        url: queryURL, // getting the custom URL from above
+        method: "GET"
+    })
+        .then(function (response) { //then pulling specific information from returned object
+            
+            console.log(response); // to check what's in that object
+
+            let cityName = $("<h2>").text(response.name); // creates a headline with the city name
+            let currentDate = moment().format("dddd, MMMM Do YYYY"); // getting today's date with moment
+            let weatherEmoji = codeToEmoji[response.weather[0].icon]; // grabbing the icon code and using function to convert into icon
+
+            let temperatureKelvin = response.main.temp; // grabing temp value
+            var temperatureInCelcius = kelvinToCelsius(temperatureKelvin); // and using conversion function to get celcius
+            
+
+            console.log(temperatureKelvin);
+            console.log(temperatureInCelcius);
+
+            let humidity = response.main.humidity;
+            let windSpeed = response.wind.speed;
+
+
+            $("#today").append(cityName);
+            $("#today").append(currentDate);
+            $("#today").append(weatherEmoji);
+            $("#today").append(temperatureInCelcius + "˚");
+            $("#today").append("Humidity: " + humidity);
+            $("#today").append("Wind Speed: " + windSpeed);
+
+        });
 
 });
 
