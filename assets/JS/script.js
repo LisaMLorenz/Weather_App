@@ -22,7 +22,12 @@ function kelvinToCelsius(kelvin) { // converting from Kelving to Celcius
     return Math.round(kelvin - 273.15); // and rounding number to before decimal
 }
 
-$("#search-button").click(function (event) { // and the search button is clicked
+function saveCity(city) {
+  storedCities.push(city);
+}
+
+$("#search-button").click(function (event, storedCities) { // and the search button is clicked
+    console.log(storedCities)
     event.preventDefault(); // stops page from reloading
 
     console.log("Search button clicked!"); // checks if button click event is working
@@ -32,7 +37,7 @@ $("#search-button").click(function (event) { // and the search button is clicked
     const cityButton = $("<button>").text(userInput).addClass("d-flex flex-column").css({ "padding": '10px', "margin": '5px' }); // I want to create a button with that text content
     buttonDiv.append(cityButton); // button is appended to the button div
     $('#search-input').val(''); // and the text field is cleared
-    storedCities.push(userInput); // adding new city to array
+    // storedCities.push(userInput); // adding new city to array
     localStorage.setItem("Cities", JSON.stringify(storedCities)); // store that array in local storage
 
     console.log(userInput); // prints the recent text field input in the console

@@ -62,5 +62,7 @@ https://lisamlorenz.github.io/Weather_App/
 ## Credits
 I tried out ChatGPT to make this work. It helped a lot but still puzzled about how to structure functions right and place new information within the existing site.
 
+Co-authored-by: Hannah <hanlacey@users.noreply.github.com>
+
 ## License
 MIT License
