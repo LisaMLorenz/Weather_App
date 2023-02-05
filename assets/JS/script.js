@@ -16,6 +16,15 @@ const codeToEmoji = {
     "11d": "⛈️",
     "13d": "🌨️",
     "50d": "🌫️",
+    "01n": "🌙",
+    "02n": "☁️",
+    "03n": "☁️",
+    "04n": "☁️",
+    "09n": "🌧️",
+    "10n": "🌦️",
+    "11n": "⛈️",
+    "13n": "🌨️",
+    "50n": "🌫️"
 };
 
 function kelvinToCelsius(kelvin) { // converting from Kelving to Celcius 
@@ -23,7 +32,7 @@ function kelvinToCelsius(kelvin) { // converting from Kelving to Celcius
 }
 
 function saveCity(city) {
-  storedCities.push(city);
+    storedCities.push(city);
 }
 
 $("#search-button").click(function (event, storedCities) { // and the search button is clicked
@@ -34,7 +43,7 @@ $("#search-button").click(function (event, storedCities) { // and the search but
 
     userInput = $('#search-input').val(); // When the user types in a city search
 
-    const cityButton = $("<button>").text(userInput).addClass("d-flex flex-column").css({ "padding": '10px', "margin": '5px' }); // I want to create a button with that text content
+    const cityButton = $("<button>").text(userInput).addClass("savedButtons").css({ "padding": '10px', "margin": '5px' }); // I want to create a button with that text content
     buttonDiv.append(cityButton); // button is appended to the button div
     $('#search-input').val(''); // and the text field is cleared
     // storedCities.push(userInput); // adding new city to array
@@ -53,7 +62,7 @@ $("#search-button").click(function (event, storedCities) { // and the search but
         method: "GET"
     })
         .then(function (response) { //then pulling specific information from returned object
-            
+
             console.log(response); // to check what's in that object
 
             let cityName = $("<h2>").text(response.name); // creates a headline with the city name
@@ -62,7 +71,7 @@ $("#search-button").click(function (event, storedCities) { // and the search but
 
             let temperatureKelvin = response.main.temp; // grabing temp value
             var temperatureInCelcius = kelvinToCelsius(temperatureKelvin); // and using conversion function to get celcius
-            
+
 
             console.log(temperatureKelvin);
             console.log(temperatureInCelcius);
@@ -70,13 +79,15 @@ $("#search-button").click(function (event, storedCities) { // and the search but
             let humidity = response.main.humidity;
             let windSpeed = response.wind.speed;
 
-            
+
+            $("#today").append("  " + currentDate + "<br>");
             $("#today").append(cityName);
-            $("#today").append("  " + currentDate);
-            $("#today").append("  " + weatherEmoji);
             $("#today").append("  " + temperatureInCelcius + "˚");
-            $("#today").append("  Humidity: " + humidity);
-            $("#today").append("  Wind Speed: " + windSpeed);
+            $("#today").append("  " + weatherEmoji + "<br>");
+
+
+            $("#today").append("  Humidity: " + humidity + "%" + "<br>");
+            $("#today").append("  Wind Speed: " + windSpeed + "<br>");
 
         });
 

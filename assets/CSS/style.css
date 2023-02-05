@@ -1,17 +1,38 @@
-
 .search-button {
     background-color: rgb(78, 202, 107);
     color: rgb(0, 0, 0);
     border-radius: 5px;
     margin: 0px 4px;
-  
+
 }
 
 .weather-header {
     background-image: url("https://media.tenor.com/beBOF70zdqQAAAAd/clouds-cloud.gif");
-    background-size:cover;
+    background-size: cover;
     color: black;
     text-shadow: 2px rgb(0, 0, 0);
     text-align-last: center;
-    
+
+}
+
+#today {
+
+    border-color: blue;
+    border-style: groove;
+    border-radius: 10px;
+    margin: 30px;
+    border: 10px;
+    padding: 20px;
+    font-size: larger;
+
+}
+
+span {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+
+i {
+    font-size: 32px;
 }
