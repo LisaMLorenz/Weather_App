@@ -1,18 +1,16 @@
-.search-button {
-    background-color: rgb(78, 202, 107);
-    color: rgb(0, 0, 0);
-    border-radius: 5px;
-    margin: 0px 4px;
-
-}
-
 .weather-header {
     background-image: url("https://media.tenor.com/beBOF70zdqQAAAAd/clouds-cloud.gif");
     background-size: cover;
+    background-color: blueviolet;
     color: black;
-    text-shadow: 2px rgb(0, 0, 0);
-    text-align-last: center;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+h1 {
+    align-self: center;
 }
 
 #today {
@@ -36,3 +34,57 @@ span {
 i {
     font-size: 32px;
 }
+
+#side-bar {
+    padding: 30px;
+    margin: 20px;
+    background-color: rgb(190, 118, 226);
+    border-radius: 10px;
+    border: none;
+    width: 40%;
+    box-shadow: 5px 5px 20px rgb(240, 140, 238);
+}
+
+#search-input {
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+    padding: 10px;
+    margin-bottom: 20px;
+
+}
+
+button {
+    border-radius: 10px !important;
+    background-color: rgb(98, 90, 106) !important;
+    color:aliceblue !important;
+    font-weight: 300 !important;
+    padding: 20px;
+    margin-right: 20px;
+    border-color: transparent;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button:hover {
+    
+    box-shadow: 5px 5px 20px rgb(240, 140, 238);
+
+    
+}
+
+#clear-button {
+    border-radius: 10px !important;
+    background-color: rgb(98, 90, 106) !important;
+    color:aliceblue !important;
+    font-weight: 300 !important;
+    padding: 20px;
+    margin-right: 20px;
+    border-color: transparent; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+

@@ -35,19 +35,55 @@ function saveCity(city) {
     storedCities.push(city);
 }
 
-$("#search-button").click(function (event, storedCities) { // and the search button is clicked
-    console.log(storedCities)
+$("#search-button").on("click", function (event) { // and the search button is clicked
+
     event.preventDefault(); // stops page from reloading
+
+    // var city = $("#userInput").val();
+
+    let city = userInput;
+
+    if (city !== '') {
+        // Retrieve the Cities array from local storage
+        let cities = localStorage.getItem("Cities");
+        cities = cities ? JSON.parse(cities) : [];
+
+        // Push the new city into the array
+        cities.push(city);
+
+        // Save the updated array back into local storage
+        localStorage.setItem("Cities", JSON.stringify(cities));
+   
+    }
+
+
+    // Retrieve the storedCities array from local storage
+    storedCities = JSON.parse(localStorage.getItem("Cities")) || [];
+
+    console.log(storedCities)
+
 
     console.log("Search button clicked!"); // checks if button click event is working
 
     userInput = $('#search-input').val(); // When the user types in a city search
 
+    $.getJSON('https://api.openweathermap.org/data/2.5/weather?q=' + userInput + '&appid=7951fb6b203b6da5edb80b868d81e68b', function (data) {
+        // Create a new HTML element to display the weather data
+        var newWeatherDiv = $('<div>');
+        newWeatherDiv.append('<p>' + data.name + '</p>');
+        newWeatherDiv.append('<p>' + data.weather[0].description + '</p>');
+        newWeatherDiv.append('<p>' + data.main.temp + '</p>');
+
+        // Replace the existing HTML element that displays the current city weather search
+        $('#today').empty(); // remove any existing content
+        $('#today').append(newWeatherDiv); // add the new content
+    });
+
     const cityButton = $("<button>").text(userInput).addClass("savedButtons").css({ "padding": '10px', "margin": '5px' }); // I want to create a button with that text content
     buttonDiv.append(cityButton); // button is appended to the button div
     $('#search-input').val(''); // and the text field is cleared
     // storedCities.push(userInput); // adding new city to array
-    localStorage.setItem("Cities", JSON.stringify(storedCities)); // store that array in local storage
+    localStorage.setItem("Cities", JSON.stringify(cities)); // store that array in local storage
 
     console.log(userInput); // prints the recent text field input in the console
     console.log(storedCities);
@@ -72,26 +108,63 @@ $("#search-button").click(function (event, storedCities) { // and the search but
             let temperatureKelvin = response.main.temp; // grabing temp value
             var temperatureInCelcius = kelvinToCelsius(temperatureKelvin); // and using conversion function to get celcius
 
-
-            console.log(temperatureKelvin);
-            console.log(temperatureInCelcius);
-
             let humidity = response.main.humidity;
             let windSpeed = response.wind.speed;
 
+            let windSpeedKPH = windSpeed * 3.6; // convert from meters per second to kilometers per hour
+            windSpeedKPH = Math.round(windSpeedKPH); // round to nearest whole number
 
-            $("#today").append("  " + currentDate + "<br>");
+            // create HTML elements for the forecast data
+            let tempInCelsiusElement = $("<p>").text("Temperature: " + temperatureInCelcius + " °C");
+            let windSpeedElement = $("<p>").text("Wind speed: " + windSpeedKPH + " km/h");
+            let humidityElement = $("<p>").text("Humidity: " + humidity + "%");
+            let weatherEmojiElement = $("<p>").text(weatherEmoji);
+
+            // add the forecast data to the page
+            $("#today").append(currentDate);
             $("#today").append(cityName);
-            $("#today").append("  " + temperatureInCelcius + "˚");
-            $("#today").append("  " + weatherEmoji + "<br>");
-
-
-            $("#today").append("  Humidity: " + humidity + "%" + "<br>");
-            $("#today").append("  Wind Speed: " + windSpeed + "<br>");
-
+            $("#today").append(tempInCelsiusElement);
+            $("#today").append(weatherEmojiElement);
+            $("#today").append(windSpeedElement);
+            $("#today").append(humidityElement);
         });
 
+
+    const forecastDiv = $("<div>").attr("id", "forecast");
+    $("#weather-container").append(forecastDiv);
+
+
 });
+
+$("city-buttons-go.button").on("click", function () {
+    var cityName = $(this).text();
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=metric&appid=" + APIkey;
+
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function (response) {
+        // Extract the necessary data from the API response
+        var temperature = response.main.temp;
+        var humidity = response.main.humidity;
+        var windSpeed = response.wind.speed;
+        var weatherIcon = response.weather[0].icon;
+
+        // Update the HTML with the new data
+        var tempInCelsiusElement = $("<p>").text("Temperature: " + temperature + " °C");
+        var humidityElement = $("<p>").text("Humidity: " + humidity + "%");
+        var windSpeedElement = $("<p>").text("Wind Speed: " + windSpeed + " m/s");
+        var weatherEmojiElement = $("<img>").attr("src", "http://openweathermap.org/img/w/" + weatherIcon + ".png");
+
+        $("#today").empty();
+        $("#today").append(cityName);
+        $("#today").append(tempInCelsiusElement);
+        $("#today").append(weatherEmojiElement);
+        $("#today").append(windSpeedElement);
+        $("#today").append(humidityElement);
+    });
+});
+
 
 $('#clear-button').click(function (event) { // when the clear button is clicked
 
