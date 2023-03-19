@@ -7,39 +7,73 @@ function getWeatherData(city) {
     let apiKey = '7951fb6b203b6da5edb80b868d81e68b';
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
-
-
     fetch(apiUrl)
         .then(function (response) {
             if (response.ok) {
-                return response.json();
+                return response.json(); //receiving a JSON for the searched City
             } else {
                 throw new Error('City not found');
             }
         })
-        .then(function (data) {
+
+        .then(function (data) { // receiving all the data for the call from the API
             // create variables to store the weather data
-            let city = data.name;
+            let city = data.name; // checking the returned data to access the information from the returned object
             let temp = data.main.temp;
             let windSpeed = data.wind.speed;
             let humidity = data.main.humidity;
             let weatherIcon = data.weather[0].icon;
+            let lat = data.coord.lat; // need the latitude and longitude and a separate call to get the UV data
+            let lon = data.coord.lon;
+            let uvIndex = 0; // for now setting this to zero to initialize the variable
+
+            function getUVIndex(lat, lon) { //the other API call to get the uv Index info
+                let apiKey = '7951fb6b203b6da5edb80b868d81e68b';
+                let apiUrl = `https://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${lat}&lon=${lon}`;
+
+                fetch(apiUrl)
+                    .then(function (response) {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('Unable to fetch UV index');
+                        }
+                    })
+                    .then(function (data) {
+                        uvIndex = data.value;
+                        // do something with the UV index data
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+
+            getUVIndex(lat, lon);
 
             // create an HTML string to display the weather information
             let weatherHtml = `
-          <h2>${city}</h2>
+          <h2><span>${city}</span>  <img src="https://openweathermap.org/img/wn/${weatherIcon}.png" alt="Weather Icon" /> </h2> 
           <p>Temperature: ${temp}&deg;C</p>
           <p>Wind Speed: ${windSpeed} m/s</p>
           <p>Humidity: ${humidity}%</p>
-          <img src="https://openweathermap.org/img/wn/${weatherIcon}.png" alt="Weather Icon" />
+          <p>UV Index: ${uvIndex}%</p>
         `;
 
-            // display the weather information in the "today" div
-            document.getElementById('today').innerHTML = weatherHtml;
+            document.getElementById('today').innerHTML = weatherHtml; //rendering the info for the app
+
+            // check if the searched city already exists in the array
+            let index = searchedCities.indexOf(city);
+
+            if (index === -1) {
+                searchedCities.push(city);
+                localStorage.setItem("searchedCities", JSON.stringify(searchedCities));
+                }
+                renderButtons();
         })
         .catch(function (error) {
-            // display an error message if the city is not found
-            document.getElementById('today').innerHTML = `<p>${error.message}</p>`;
+            $('#error-modal').modal('show'); // display an error modal if the city is not found
+            console.log(error);
+
         });
 }
 
@@ -49,10 +83,7 @@ document.getElementById('search-button').addEventListener('click', function (eve
     let city = document.getElementById('search-input').value.trim();
     if (city) {
         getWeatherData(city);
-        searchedCities.push(city);
-        renderButtons();
-        localStorage.setItem("searchedCities", JSON.stringify(searchedCities));
-        document.getElementById('search-input').value = ""; // clear search input field
+        document.getElementById('search-input').value = "";
     }
 });
 
@@ -66,10 +97,7 @@ function renderButtons() {
         cityBtn.text(searchedCities[i]);
         $("#history").append(cityBtn);
     }
-    localStorage.setItem("searchedCities", JSON.stringify(searchedCities));
 }
-
-
 
 $(document).on("click", ".city-btn", function () {
     var cityName = $(this).attr("data-name");
