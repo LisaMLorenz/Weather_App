@@ -54,7 +54,7 @@ https://lisamlorenz.github.io/Weather_App/
 
 ### Screenshot
 [Click here to see the deployed screenshot](./assets/images/weather_dashboard_screengrab.png)
-<img width="710" alt="weather_dashboard_screengrab" src="https://user-images.githubusercontent.com/116456417/215340734-73ab4252-841b-4ae3-b178-66dfd0473f2d.png">
+<img width="750" alt="weather_dashboard_screengrab" src= "https://user-images.githubusercontent.com/116456417/226211500-46f3c8e1-bba4-44a4-8ae1-ede8ef9f6b31.png" > 
 
 
 
