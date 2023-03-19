@@ -43,7 +43,20 @@ function getWeatherData(city) {
                     .then(function (data) {
                         uvIndex = data.value;
                         // do something with the UV index data
+
+                        // create an HTML string to display the weather information
+                        let weatherHtml = `
+            <h2><span>${city}</span>  <img src="https://openweathermap.org/img/wn/${weatherIcon}.png" alt="Weather Icon" /> </h2> 
+            <p>Temperature: ${temp}&deg;C</p>
+            <p>Wind Speed: ${windSpeed} m/s</p>
+            <p>Humidity: ${humidity}%</p>
+            <p>UV Index: ${uvIndex}%</p>
+          `;
+
+                        document.getElementById('today').innerHTML = weatherHtml; //rendering the info for the app
+
                     })
+
                     .catch(function (error) {
                         console.log(error);
                     });
@@ -51,16 +64,6 @@ function getWeatherData(city) {
 
             getUVIndex(lat, lon);
 
-            // create an HTML string to display the weather information
-            let weatherHtml = `
-          <h2><span>${city}</span>  <img src="https://openweathermap.org/img/wn/${weatherIcon}.png" alt="Weather Icon" /> </h2> 
-          <p>Temperature: ${temp}&deg;C</p>
-          <p>Wind Speed: ${windSpeed} m/s</p>
-          <p>Humidity: ${humidity}%</p>
-          <p>UV Index: ${uvIndex}%</p>
-        `;
-
-            document.getElementById('today').innerHTML = weatherHtml; //rendering the info for the app
 
             // check if the searched city already exists in the array
             let index = searchedCities.indexOf(city);
