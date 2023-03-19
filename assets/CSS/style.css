@@ -105,6 +105,8 @@ button:hover {
 #forecast {
     border: none;
     padding: 10px;
+    justify-content: space-between;
+    
 }
 
 
@@ -122,7 +124,7 @@ button:hover {
     background-color: rgb(68, 64, 70);
     border-radius: 10px;
     border: none;
+    margin: 10px;
     color: aliceblue;
     box-shadow: 5px 5px 20px rgb(240, 140, 238);
-    width: 100%;
 }

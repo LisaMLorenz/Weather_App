@@ -18,6 +18,8 @@ function getWeatherData(city) {
         })
 
         .then(function (data) { // receiving all the data for the call from the API
+            
+
             // create variables to store the weather data
             let city = data.name; // checking the returned data to access the information from the returned object
             let temp = data.main.temp;
@@ -27,6 +29,12 @@ function getWeatherData(city) {
             let lat = data.coord.lat; // need the latitude and longitude and a separate call to get the UV data
             let lon = data.coord.lon;
             let uvIndex = 0; // for now setting this to zero to initialize the variable
+            let todaysDate = moment().format('ddd D/MM/YY');
+
+
+
+            
+
 
             function getUVIndex(lat, lon) { //the other API call to get the uv Index info
                 let apiKey = '7951fb6b203b6da5edb80b868d81e68b';
@@ -40,17 +48,21 @@ function getWeatherData(city) {
                             throw new Error('Unable to fetch UV index');
                         }
                     })
+
+
                     .then(function (data) {
                         uvIndex = data.value;
                         // do something with the UV index data
 
+
                         // create an HTML string to display the weather information
                         let weatherHtml = `
-            <h2><span>${city}</span>  <img src="https://openweathermap.org/img/wn/${weatherIcon}.png" alt="Weather Icon" /> </h2> 
+                        <h4> ${todaysDate}</h4>
+            <h2><span>${city}</span> <img src="https://openweathermap.org/img/wn/${weatherIcon}.png" alt="Weather Icon" /> </h2> 
             <p>Temperature: ${temp}&deg;C</p>
             <p>Wind Speed: ${windSpeed} m/s</p>
             <p>Humidity: ${humidity}%</p>
-            <p>UV Index: ${uvIndex}%</p>
+            <p>UV Index: ${uvIndex}</p>
           `;
 
                         document.getElementById('today').innerHTML = weatherHtml; //rendering the info for the app
@@ -63,6 +75,7 @@ function getWeatherData(city) {
             }
 
             getUVIndex(lat, lon);
+            
 
 
             // check if the searched city already exists in the array
@@ -74,6 +87,7 @@ function getWeatherData(city) {
             }
             renderButtons();
             fetchForecast(city);
+    
         })
         .catch(function (error) {
             $('#error-modal').modal('show'); // display an error modal if the city is not found
