@@ -132,6 +132,9 @@ function getWeatherData(city) {
 
 // add an event listener to the search button to fetch the weather information for the input city
 document.getElementById('search-button').addEventListener('click', function (event) {
+    
+    document.getElementById("today").style.display = "block";
+
     event.preventDefault();
     let city = document.getElementById('search-input').value.trim();
     if (city) {
@@ -154,6 +157,7 @@ function renderButtons() {
 
 $(document).on("click", ".city-btn", function () {
     var cityName = $(this).attr("data-name");
+    document.getElementById("today").style.display = "block";
     getWeatherData(cityName);
 });
 
@@ -166,6 +170,8 @@ if (localStorage.getItem("searchedCities")) {
 }
 
 document.getElementById('clear-button').addEventListener('click', function (event) {
+    document.getElementById("today").style.display = "none";
+    document.getElementById("forecast").style.display = "none";
     event.preventDefault();
     localStorage.clear();
     searchedCities = [];

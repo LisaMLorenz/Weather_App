@@ -92,6 +92,16 @@ button:hover {
     width: 100%;
 }
 
+#modal-button {
+    padding: 30px;
+    width: 30px !important;
+    margin: 5px;
+    height: 30px;
+    align-self: flex-end;
+    align-items: center;
+    
+}
+
 #forecast {
     border: none;
     padding: 10px;
