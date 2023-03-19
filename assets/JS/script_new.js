@@ -99,17 +99,23 @@ function getWeatherData(city) {
 
                 let forecastHtml = '';
                 dailyForecastData.forEach(function (forecast) {
-                    let forecastDate = moment(forecast.dt_txt).format('ddd, MMM D');
+                    let forecastDate = moment(forecast.dt_txt).format('ddd D/MM');
                     let forecastIconUrl = `https://openweathermap.org/img/wn/${forecast.weather[0].icon}.png`;
-                    let forecastTemp = Math.round(forecast.main.temp);
+                    let forecastTemp = "Temp: " + Math.round(forecast.main.temp);
+                    let forecastWind = "Wind: " + forecast.wind.speed + "m/s";
+                    let forecastHumidity = "Humidity: " + forecast.main.humidity + "%";
+
+                    console.log(forecast);
 
                     forecastHtml += `
           <div class="col-md-2 col-6 mb-3">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">${forecastDate}</h5>
-                <img src="${forecastIconUrl}" alt="${forecast.weather[0].description}" />
+                <h5 class="card-title"><span>${forecastDate}</span><img src="${forecastIconUrl}" alt="${forecast.weather[0].description}" /></h5>
                 <p class="card-text">${forecastTemp} ${units === 'metric' ? '°C' : '°F'}</p>
+                <p class="card-text">${forecastWind}</p>
+                <p class="card-text">${forecastHumidity}</p>
+
               </div>
             </div>
           </div>
