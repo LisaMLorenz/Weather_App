@@ -1,3 +1,16 @@
+/* General Styles */
+
+h1 {
+    align-self: center;
+}
+
+
+i {
+    font-size: 32px;
+}
+
+/* Header */
+
 .weather-header {
     background-image: url("https://media.tenor.com/beBOF70zdqQAAAAd/clouds-cloud.gif");
     background-size: cover;
@@ -6,34 +19,11 @@
     height: 150px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    width: 100%;
 }
 
-h1 {
-    align-self: center;
-}
-
-#today {
-
-    border-color: blue;
-    border-style: groove;
-    border-radius: 10px;
-    margin: 30px;
-    border: 10px;
-    padding: 20px;
-    font-size: larger;
-
-}
-
-span {
-    display: inline-block;
-    margin-right: 10px;
-}
-
-
-i {
-    font-size: 32px;
-}
+/* Search Bar */
 
 #side-bar {
     padding: 30px;
@@ -41,7 +31,6 @@ i {
     background-color: rgb(190, 118, 226);
     border-radius: 10px;
     border: none;
-    width: 40%;
     box-shadow: 5px 5px 20px rgb(240, 140, 238);
 }
 
@@ -51,8 +40,11 @@ i {
     border: none;
     padding: 10px;
     margin-bottom: 20px;
+    flex-wrap: wrap;
 
 }
+
+/* Buttons Styles */
 
 button {
     border-radius: 10px !important;
@@ -60,19 +52,17 @@ button {
     color:aliceblue !important;
     font-weight: 300 !important;
     padding: 20px;
-    margin-right: 20px;
+    margin-bottom: 10px !important;
     border-color: transparent;
     height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 
 button:hover {
-    
     box-shadow: 5px 5px 20px rgb(240, 140, 238);
-
-    
 }
 
 #clear-button {
@@ -80,11 +70,49 @@ button:hover {
     background-color: rgb(98, 90, 106) !important;
     color:aliceblue !important;
     font-weight: 300 !important;
-    padding: 20px;
-    margin-right: 20px;
+    margin-left: 20px !important;
+    margin-right: 10px !important;
     border-color: transparent; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100%;
 }
 
+#search-button {
+    border-radius: 10px !important;
+    background-color: rgb(98, 90, 106) !important;
+    color:aliceblue !important;
+    font-weight: 300 !important;
+    border-color: transparent; 
+    margin-right: 30px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100%;
+}
+
+#forecast {
+    border: none;
+    padding: 10px;
+}
+
+
+#today {
+    padding: 30px;
+    margin: 10px;
+    background-color: rgb(201, 182, 211);
+    border-radius: 10px;
+    border: none;
+    box-shadow: 5px 5px 20px rgb(240, 140, 238);
+}
+
+.card-body {
+    
+    background-color: rgb(68, 64, 70);
+    border-radius: 10px;
+    border: none;
+    color: aliceblue;
+    box-shadow: 5px 5px 20px rgb(240, 140, 238);
+    width: 100%;
+}

@@ -105,7 +105,7 @@ function getWeatherData(city) {
                     let forecastWind = "Wind: " + forecast.wind.speed + "m/s";
                     let forecastHumidity = "Humidity: " + forecast.main.humidity + "%";
 
-                    console.log(forecast);
+                    // console.log(forecast);
 
                     forecastHtml += `
           <div class="col-md-2 col-6 mb-3">
