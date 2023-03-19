@@ -1,4 +1,5 @@
 let searchedCities = JSON.parse(localStorage.getItem("searchedCities")) || [];
+let units = 'metric';
 
 
 // declare a function to fetch the weather information for a given city
@@ -67,14 +68,57 @@ function getWeatherData(city) {
             if (index === -1) {
                 searchedCities.push(city);
                 localStorage.setItem("searchedCities", JSON.stringify(searchedCities));
-                }
-                renderButtons();
+            }
+            renderButtons();
+            fetchForecast(city);
         })
         .catch(function (error) {
             $('#error-modal').modal('show'); // display an error modal if the city is not found
             console.log(error);
 
         });
+
+    function fetchForecast(city) {
+        let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=${units}`;
+
+        fetch(apiUrl)
+            .then(function (response) {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .then(function (data) {
+                let dailyForecastData = data.list.filter(function (forecast) {
+                    return forecast.dt_txt.includes("12:00:00"); // get the forecast data for 12:00:00 each day
+                });
+
+                let forecastHtml = '';
+                dailyForecastData.forEach(function (forecast) {
+                    let forecastDate = moment(forecast.dt_txt).format('ddd, MMM D');
+                    let forecastIconUrl = `https://openweathermap.org/img/wn/${forecast.weather[0].icon}.png`;
+                    let forecastTemp = Math.round(forecast.main.temp);
+
+                    forecastHtml += `
+          <div class="col-md-2 col-6 mb-3">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">${forecastDate}</h5>
+                <img src="${forecastIconUrl}" alt="${forecast.weather[0].description}" />
+                <p class="card-text">${forecastTemp} ${units === 'metric' ? '°C' : '°F'}</p>
+              </div>
+            </div>
+          </div>
+        `;
+                });
+
+                document.getElementById('forecast').innerHTML = forecastHtml;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
 }
 
 // add an event listener to the search button to fetch the weather information for the input city
